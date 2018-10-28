@@ -1,0 +1,222 @@
+#Variables: <player>,player <ticketid> listening ticket id  <balance>,ticket balance
+#You can issue commands and pages you want 
+#But if you omit them,the player will click it with no action following.And 
+#They are clicking at a useless button lol
+GUI:
+  welcomepage:
+    main: true
+    slots: 9
+    displayname: '&3Metro+ | Welcome'
+    items:
+      single:
+        material: wool
+        subtype: 5
+        displayname: '&aBuy Single Journey Metro+' 
+        slot: 2
+        lore:
+        #- '&aClick to begin'
+        action:
+          openpage: buysinglepage
+      standard:
+        material: wool
+        subtype: 11
+        displayname: '&bBuy Standard Metro+'
+        slot: 5
+        lore:
+        #- '&aClick to begin'
+        action:
+          openpage: buystandardpage
+      insert:
+        material: wool
+        subtype: 4
+        displayname: '&6Insert Existing Metro+'
+        slot: 8 
+        lore:
+        - '&8Check Balance / Top Up / Refund'
+        action:
+          openpage: insertpage
+  buysinglepage:
+    slots: 9
+    displayname: '&aBuy Single Journey Metro+'
+    items:
+      pacoMetro:
+        material: lapis_block
+        displayname: '&9Paco Metro'
+        slot: 3
+        lore:
+        - '&7WH$1.5'
+        - '+ WH$0.1 Issuing Fee'
+        action:
+          command: 'metroplus exchange <player> pacoMetro 1'
+          openpage: purchaseSucessful  
+      pacoBERT:
+        material: stained_clay
+        subtype: 13
+        displayname: '&2BERTransit'
+        slot: 7
+        lore:
+        - '&7WH$2.5'
+        - 'WH$0.1 Issuing Fee'
+        action:
+          command: 'metroplus exchange <player> BERT 1'
+          openpage: purchaseSucessful
+  insertpage:
+    slots: 9
+    displayname: '&6Right click a standard ticket'
+    items: []
+    listen:
+      listento: standard
+      openpage: standardfunctionpage
+  buystandardpage:
+    slots: 9
+    displayname: '&9Buy Standard Metro+'
+    items:
+      ticketstandardone:
+        material: wool
+        subtype: 11
+        displayname: '&9WH$25'
+        slot: 1
+        lore:
+        - 'WH$0.1 Issuing Fee'
+        action:
+          command: 'metroplus exchange <player> standard 1'
+          openpage: purchaseSucessful
+  
+  purchaseSucessful:
+    slots: 27
+    displayname: '&aPurchaseSucessful!'
+    items:
+      sucess:
+        material: emerald_block
+        displayname: '&aSucessfuly purchased!'
+        slot: 1
+        lore:
+        - '&9Click to exit'
+  standardfunctionpage:
+    slots: 9
+    displayname: '&6Existing Metro+ | <ticketid>'
+    lastlisteningtogui: insertpage
+    items:
+      balance:
+        material: wool
+        subtype: 5
+        displayname: '&aBalance'
+        slot: 2
+        lore:
+        - 'WH$<balance>'
+        action:
+           command: metroplus balance <ticketid>
+      topupfunction:
+        material: wool
+        subtype: 4
+        displayname: '&6Top Up'
+        slot: 5
+        lore:
+        - '&6Click to topup.'          
+        action:
+          openpage: topupstandardpage
+          command: ''
+      Refund:
+        material: wool
+        subtype: 14
+        displayname: '&cRefund'
+        slot: 8
+        lore:
+        - 'WH$<balance>'
+        action:
+          command: 'metroplus refund <ticketid>'
+  topupstandardpage:
+    slots: 9
+    displayname: '&6Top Up Standard Metro+'
+    items:
+      topup25:
+        material: wool
+        subtype: 4
+        displayname: '&9WH$25'
+        slot: 1
+        lore:
+        - '&6+ WH0.1 Issuing Fee'
+        action:
+          command: 'metroplus topup <ticketid> 25'
+      topup50:
+        material: wool
+        subtype: 4
+        displayname: '&9WH$50'
+        slot: 2
+        lore:
+        - '&6+ WH0.1 Issuing Fee'
+        action:
+          command: 'metroplus topup <ticketid> 25'
+      topup100:
+        material: wool
+        subtype: 4
+        displayname: '&9WH$25'
+        slot: 3
+        lore:
+        - '&6+ WH0.1 Issuing Fee'
+        action:
+          command: 'metroplus topup <ticketid> 25'
+      topup200:
+        material: wool
+        subtype: 4
+        displayname: '&9WH$25'
+        slot: 4
+        lore:
+        - '&6+ WH0.1 Issuing Fee'
+        action:
+          command: 'metroplus topup <ticketid> 25'
+tickettype:
+  standard:
+    material: name_tag
+    topup: true
+    startupcost: 25 
+    displayname: '&9Metro+ : Standard'
+  pacoMetro:
+    material: name_tag
+    startupcost: 1.5
+    displayname: '&aMetro+ : Single Journey'
+  BERT:
+    material: name_tag
+    startupcost: 2.5
+    displayname: '&aMetro+ : Single Journey'
+setting:
+  
+  faregate:
+    
+    line0: '&f[Faregate]'
+    line1: '&a←'
+    line2: '&lTap Metro+'
+    line3: ''
+  ticket:
+    line0: '&f[Tickets]'
+    line1: '&lBuy/Top Up'
+    line2: '&lMetro+'
+    line3: '&bTap to begin'
+messages:
+  pluginname: '&7[&bMetro+&7] '
+  permissiondenied: '&4Permission denied.'
+  createdsign: '&aYou have created a sign!'
+  ticketnotfound: '&4Ticket type not found!'
+  argumentserror: '&4Arguments error!'
+  invalidnumber: '&4Invalid number!'
+  invalidplayer: '&4Invalid player!'
+  transactionsucess: '&aTransaction sucess!' 
+  transactionfail: '&4Transaction failed!'
+  confignotfound: '&4Config not found!'
+  ticketnotfoundininventory: '&4There isnt a ticket in his inventory!'
+  inouterror: '&4The sign you created can only be in or out!'
+  gatenotfound: '&4Thers no gate near the faregate sign!'
+  
+  #notholdingticket: '&4You are not holding a right ticket!'
+  notholdingticket: '&eThis ticket is invalid for this transit system.'
+  
+  #ticketbalance: '&aYour ticket balance is $<balance>'
+  ticketbalance: '&bTicket balance is now &eWH$<balance>'
+  entergate: '&aYou have entered a gate!'
+  exitgate: '&aYou have exited the gate!'
+  protectedgate: '&4This gate is protected!'
+  protectedsign: '&4This sign is protected!'
+  doubletapped: '&4You double tapped.'
+  cannotafford: '&4You cannot afford the price.'
+  refunded: '&aRefunded your ticket!'
+  reloaded: '&aReloaded Config Files!'
