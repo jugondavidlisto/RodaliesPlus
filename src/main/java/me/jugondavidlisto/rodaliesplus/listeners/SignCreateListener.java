@@ -2,6 +2,7 @@ package me.jugondavidlisto.rodaliesplus.listeners;
 
 import java.util.ArrayList;
 import java.util.Set;
+
 import me.jugondavidlisto.rodaliesplus.metro.Console;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -26,8 +27,7 @@ import me.jugondavidlisto.rodaliesplus.utils.TicketManager;
 import me.jugondavidlisto.rodaliesplus.utils.TranslateMethods;
 import org.bukkit.ChatColor;
 
-public class SignCreateListener
-        implements Listener {
+public class SignCreateListener implements Listener {
 
     Console main = Console.getInstance();
     Message msg = new Message();

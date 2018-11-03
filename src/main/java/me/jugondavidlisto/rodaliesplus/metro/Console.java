@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
+
 import me.jugondavidlisto.rodaliesplus.listeners.BlockBreakListener;
 import me.jugondavidlisto.rodaliesplus.listeners.InventoryCloseListener;
 import me.jugondavidlisto.rodaliesplus.listeners.InventoryListener;
@@ -33,8 +34,8 @@ import me.jugondavidlisto.rodaliesplus.utils.GUIManager;
 import me.jugondavidlisto.rodaliesplus.utils.Ticket;
 import me.jugondavidlisto.rodaliesplus.utils.TicketManager;
 
-public class Console
-extends JavaPlugin {
+public class Console extends JavaPlugin {
+
     public static Console instance;
     Logger logger = Logger.getLogger("Minecraft");
     public static HashMap<Player, Ticket> listeningto;
@@ -69,7 +70,7 @@ extends JavaPlugin {
         useFaregateSign = new Permission("metroplus.usefaregatesign");*/
         economy = null;
     }
-    
+
     private static final String LOG_TAG = "[Metro+] ";
 
     public Console() {
@@ -82,7 +83,7 @@ extends JavaPlugin {
         this.logger.info(LOG_TAG + "has been enabledd.");
         if (!this.setupEconomy()) {
             this.logger.info(LOG_TAG + "This plugin is disabling due to Vault is not installed!");
-            this.getServer().getPluginManager().disablePlugin((Plugin)this);
+            this.getServer().getPluginManager().disablePlugin((Plugin) this);
         }
     }
 
@@ -97,7 +98,7 @@ extends JavaPlugin {
     private boolean setupEconomy() {
         RegisteredServiceProvider economyProvider = this.getServer().getServicesManager().getRegistration(Economy.class);
         if (economyProvider != null) {
-            economy = (Economy)economyProvider.getProvider();
+            economy = (Economy) economyProvider.getProvider();
         }
         if (economy != null) {
             return true;
@@ -129,7 +130,7 @@ extends JavaPlugin {
             new me.jugondavidlisto.rodaliesplus.listeners.InventoryListener();
             new me.jugondavidlisto.rodaliesplus.listeners.InventoryCloseListener();
             new me.jugondavidlisto.rodaliesplus.listeners.PlayerMoveListener();
-            this.getCommand("metroplus").setExecutor((CommandExecutor)new MetroCMD());
+            this.getCommand("metroplus").setExecutor((CommandExecutor) new MetroCMD());
         } else {
             this.logger.severe(LOG_TAG + "stopped working due to Vault not installed.");
         }
@@ -139,7 +140,7 @@ extends JavaPlugin {
         if (this.datafile == null) {
             this.datafile = new File(this.getDataFolder(), "data.yml");
         }
-        this.datayml = YamlConfiguration.loadConfiguration((File)this.datafile);
+        this.datayml = YamlConfiguration.loadConfiguration((File) this.datafile);
     }
 
     public FileConfiguration getDataConfig() {
@@ -155,8 +156,7 @@ extends JavaPlugin {
         }
         try {
             this.getDataConfig().save(this.datafile);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

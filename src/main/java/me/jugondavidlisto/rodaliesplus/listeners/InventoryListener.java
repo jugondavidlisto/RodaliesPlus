@@ -3,6 +3,7 @@ package me.jugondavidlisto.rodaliesplus.listeners;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import me.jugondavidlisto.rodaliesplus.metro.Console;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -26,17 +27,16 @@ import me.jugondavidlisto.rodaliesplus.utils.Item;
 import me.jugondavidlisto.rodaliesplus.utils.Ticket;
 import me.jugondavidlisto.rodaliesplus.utils.TicketManager;
 
-public class InventoryListener
-implements Listener {
+public class InventoryListener implements Listener {
     Console console = Console.getInstance();
 
     public InventoryListener() {
-        this.console.getServer().getPluginManager().registerEvents((Listener)this, (Plugin)this.console);
+        this.console.getServer().getPluginManager().registerEvents((Listener) this, (Plugin) this.console);
     }
 
     @EventHandler
     public void onPlayerInteract(InventoryClickEvent e) {
-        Player p = (Player)e.getWhoClicked();
+        Player p = (Player) e.getWhoClicked();
         if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR) {
             return;
         }
@@ -49,7 +49,8 @@ implements Listener {
                     Console.listeningto.put(p, tickettype);
                 }
                 ItemMeta ClickedMeta = e.getCurrentItem().getItemMeta();
-                if (Console.listeningto.get((Object)p) == null || !ClickedMeta.getDisplayName().equals(((Ticket)Console.listeningto.get((Object)p)).getDisplayName()) || !e.getCurrentItem().getType().equals((Object)((Ticket)Console.listeningto.get((Object)p)).getMat())) continue;
+                if (Console.listeningto.get((Object) p) == null || !ClickedMeta.getDisplayName().equals(((Ticket) Console.listeningto.get((Object) p)).getDisplayName()) || !e.getCurrentItem().getType().equals((Object) ((Ticket) Console.listeningto.get((Object) p)).getMat()))
+                    continue;
                 for (GUI gu : GUIManager.getGUIs()) {
                     if (!gu.getName().equals(g.getOpenpage())) continue;
                     p.closeInventory();
@@ -59,18 +60,19 @@ implements Listener {
                 }
             }
             for (Item i : g.getItems()) {
-                if (e.getInventory().getItem(i.getSlot() - 1) == null || !e.getInventory().getItem(i.getSlot() - 1).equals((Object)e.getCurrentItem())) continue;
+                if (e.getInventory().getItem(i.getSlot() - 1) == null || !e.getInventory().getItem(i.getSlot() - 1).equals((Object) e.getCurrentItem()))
+                    continue;
                 p.closeInventory();
                 if (i.getCommand() != null) {
                     String command = i.getCommand();
                     command = command.replaceAll("<player>", e.getWhoClicked().getName());
-                    if (Console.LastListeningTo.get((Object)p) != null) {
-                        ItemStack ticket = (ItemStack)Console.LastListeningTo.get((Object)p);
-                        String haha = (String)ticket.getItemMeta().getLore().get(0);
+                    if (Console.LastListeningTo.get((Object) p) != null) {
+                        ItemStack ticket = (ItemStack) Console.LastListeningTo.get((Object) p);
+                        String haha = (String) ticket.getItemMeta().getLore().get(0);
                         command = command.replaceAll("<ticketid>", haha);
                     }
                     Console.getInstance().getServer().getConsoleSender().sendMessage(command);
-                    Bukkit.dispatchCommand((CommandSender)Console.getInstance().getServer().getConsoleSender(), (String)command);
+                    Bukkit.dispatchCommand((CommandSender) Console.getInstance().getServer().getConsoleSender(), (String) command);
                 }
                 openpage = i.getOpenpage();
             }

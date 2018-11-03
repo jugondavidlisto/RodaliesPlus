@@ -2,6 +2,7 @@ package me.jugondavidlisto.rodaliesplus.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -44,12 +45,12 @@ public class GUI {
         this.openpage = openpage;
         this.listento = listento;
         this.Main = Main;
-        this.inv = Bukkit.createInventory((InventoryHolder)null, (int)this.slots, (String)this.displayName);
+        this.inv = Bukkit.createInventory((InventoryHolder) null, (int) this.slots, (String) this.displayName);
         for (Item i : items) {
-            ItemStack item = new ItemStack(i.getMat(), 1,(byte)i.getsubtype());
+            ItemStack item = new ItemStack(i.getMat(), 1, (byte) i.getsubtype());
             ItemMeta im = item.getItemMeta();
             im.setDisplayName(i.getDisplayName());
-            im.setLore((List)i.getLores());
+            im.setLore((List) i.getLores());
             item.setItemMeta(im);
             this.inv.setItem(i.getSlot() - 1, item);
         }

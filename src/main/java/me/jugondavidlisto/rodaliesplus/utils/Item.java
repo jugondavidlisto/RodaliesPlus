@@ -1,6 +1,7 @@
 package me.jugondavidlisto.rodaliesplus.utils;
 
 import java.util.ArrayList;
+
 import org.bukkit.Material;
 
 public class Item {
@@ -44,7 +45,7 @@ public class Item {
     public Material getMat() {
         return this.mat;
     }
-    
+
     public void subtype(int subtype) {
         this.subtype = subtype;
     }

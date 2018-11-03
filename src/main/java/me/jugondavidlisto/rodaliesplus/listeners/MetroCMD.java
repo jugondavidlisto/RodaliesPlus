@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+
 import me.jugondavidlisto.rodaliesplus.metro.Console;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -43,7 +44,7 @@ public class MetroCMD implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
-            Player p = (Player)sender;
+            Player p = (Player) sender;
             if (p.hasPermission("metroplus.viewcmd")) {
                 if (args.length == 0) {
                     this.msg.sendHelpMsg(p);
@@ -66,9 +67,10 @@ public class MetroCMD implements CommandExecutor {
                         Ticket ticket = null;
                         if (Console.getInstance().getDataConfig().getConfigurationSection("data") != null) {
                             for (Map.Entry entry : Console.getInstance().getDataConfig().getConfigurationSection("data").getValues(false).entrySet()) {
-                                if (Console.getInstance().getDataConfig().getConfigurationSection("data." + (String)entry.getKey() + "." + ticketid) == null) continue;
+                                if (Console.getInstance().getDataConfig().getConfigurationSection("data." + (String) entry.getKey() + "." + ticketid) == null)
+                                    continue;
                                 foundconfig = true;
-                                String type = Console.getInstance().getDataConfig().getString("data." + (String)entry.getKey() + "." + ticketid + ".type");
+                                String type = Console.getInstance().getDataConfig().getString("data." + (String) entry.getKey() + "." + ticketid + ".type");
                                 for (Player pl : Console.getInstance().getServer().getOnlinePlayers()) {
                                     if (!pl.getUniqueId().toString().equals(pl.getUniqueId().toString())) continue;
                                     targetP = pl;
@@ -76,7 +78,7 @@ public class MetroCMD implements CommandExecutor {
                                 for (Ticket tickettype : TicketManager.tickets) {
                                     if (!tickettype.getName().equals(type)) continue;
                                     ticket = tickettype;
-                                    Cost = tickettype.isTopUp() ? Console.getInstance().getDataConfig().getDouble("data." + (String)entry.getKey() + "." + ticketid + ".balance") : tickettype.getStartupCost();
+                                    Cost = tickettype.isTopUp() ? Console.getInstance().getDataConfig().getDouble("data." + (String) entry.getKey() + "." + ticketid + ".balance") : tickettype.getStartupCost();
                                 }
                                 if (!foundconfig) {
                                     this.msg.sendConfigNotFoundc(sender);
@@ -100,12 +102,12 @@ public class MetroCMD implements CommandExecutor {
                                         if (is != null && is.getType() != null && is.getType() != Material.AIR) {
                                             if (targetP.getInventory().getSize() > 0) {
                                                 if (is.getItemMeta().getDisplayName() != null && is.getItemMeta().getLore() != null && is.getItemMeta().getDisplayName().equals(ticket.getDisplayName())) {
-                                                    if (((String)is.getItemMeta().getLore().get(0)).equals(ticketid)) {
+                                                    if (((String) is.getItemMeta().getLore().get(0)).equals(ticketid)) {
                                                         found = true;
-                                                        EconomyResponse er = Console.economy.depositPlayer((OfflinePlayer)targetP, Cost);
+                                                        EconomyResponse er = Console.economy.depositPlayer((OfflinePlayer) targetP, Cost);
                                                         if (er.transactionSuccess()) {
                                                             if (is.getAmount() > 1) {
-                                                                Console.getInstance().getDataConfig().set("data." + (String)entry.getKey() + "." + ticketid, (Object)null);
+                                                                Console.getInstance().getDataConfig().set("data." + (String) entry.getKey() + "." + ticketid, (Object) null);
                                                                 Console.getInstance().saveDataConfig();
                                                                 Console.getInstance();
                                                                 is.setAmount(is.getAmount() - 1);
@@ -142,7 +144,8 @@ public class MetroCMD implements CommandExecutor {
                         boolean foundPlayer = false;
                         if (Console.getInstance().getDataConfig().getConfigurationSection("data") != null) {
                             for (Map.Entry entry : Console.getInstance().getDataConfig().getConfigurationSection("data").getValues(false).entrySet()) {
-                                if (Console.getInstance().getDataConfig().getString("data." + (String)entry.getKey() + "." + ticketid) == null) continue;
+                                if (Console.getInstance().getDataConfig().getString("data." + (String) entry.getKey() + "." + ticketid) == null)
+                                    continue;
                                 foundConfig = true;
                                 for (Player pl : Console.getInstance().getServer().getOnlinePlayers()) {
                                     if (!pl.getUniqueId().toString().equals(entry.getKey())) continue;
@@ -162,7 +165,7 @@ public class MetroCMD implements CommandExecutor {
                             this.msg.sendConfigNotFoundc(sender);
                         }
                         double balance = Console.getInstance().getDataConfig().getDouble("data." + targetP.getUniqueId().toString() + "." + ticketid + ".balance");
-                        String msg = TranslateMethods.translateColor((String)Console.getInstance().getConfig().getString("messages.ticketbalance"));
+                        String msg = TranslateMethods.translateColor((String) Console.getInstance().getConfig().getString("messages.ticketbalance"));
                         msg = msg.replaceAll("<balance>", String.valueOf(balance));
                         targetP.sendMessage(msg);
                     } else if (args[0].equalsIgnoreCase("opengui")) {
@@ -182,7 +185,8 @@ public class MetroCMD implements CommandExecutor {
                         boolean foundConfig = false;
                         if (Console.getInstance().getDataConfig().getConfigurationSection("data") != null) {
                             for (Map.Entry entry : Console.getInstance().getDataConfig().getConfigurationSection("data").getValues(false).entrySet()) {
-                                if (Console.getInstance().getDataConfig().getString("data." + (String)entry.getKey() + "." + ticketid) == null) continue;
+                                if (Console.getInstance().getDataConfig().getString("data." + (String) entry.getKey() + "." + ticketid) == null)
+                                    continue;
                                 foundConfig = true;
                                 for (Player pl : Console.getInstance().getServer().getOnlinePlayers()) {
                                     if (!pl.getUniqueId().toString().equals(entry.getKey())) continue;
@@ -199,13 +203,12 @@ public class MetroCMD implements CommandExecutor {
                             }
                             try {
                                 value = Double.parseDouble(args[2]);
-                            }
-                            catch (NumberFormatException e) {
+                            } catch (NumberFormatException e) {
                                 this.msg.sendInvalidNumberc(sender);
                             }
-                            EconomyResponse er = Console.economy.withdrawPlayer((OfflinePlayer)targetP, value);
+                            EconomyResponse er = Console.economy.withdrawPlayer((OfflinePlayer) targetP, value);
                             if (er.transactionSuccess()) {
-                                Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId().toString() + "." + ticketid + ".balance", (Object)(Console.getInstance().getDataConfig().getDouble("data." + targetP.getUniqueId().toString() + "." + ticketid + ".balance") + value));
+                                Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId().toString() + "." + ticketid + ".balance", (Object) (Console.getInstance().getDataConfig().getDouble("data." + targetP.getUniqueId().toString() + "." + ticketid + ".balance") + value));
                                 this.msg.sendTransactionSucess(targetP);
                             } else {
                                 this.msg.sendTransactionFail(targetP);
@@ -229,8 +232,7 @@ public class MetroCMD implements CommandExecutor {
                         }
                         try {
                             Amount = Integer.parseInt(args[3]);
-                        }
-                        catch (NumberFormatException e) {
+                        } catch (NumberFormatException e) {
                             this.msg.sendInvalidNumber(p);
                             return false;
                         }
@@ -250,18 +252,18 @@ public class MetroCMD implements CommandExecutor {
                         lore.add(id);
                         ticketmeta.setLore(lore);
                         ticket.setItemMeta(ticketmeta);
-                        double cost = startUpCost * (double)Amount;
+                        double cost = startUpCost * (double) Amount;
                         EconomyResponse r = Console.economy.withdrawPlayer(targetP.getName(), cost);
                         if (r.transactionSuccess()) {
                             this.msg.sendTransactionSucess(targetP);
                             targetP.getInventory().addItem(new ItemStack[]{ticket});
                             if (tickettype.isTopUp()) {
-                                Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId() + "." + id + ".type", (Object)tickettype.getName());
+                                Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId() + "." + id + ".type", (Object) tickettype.getName());
                                 Console.getInstance().saveDataConfig();
-                                Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId() + "." + id + ".balance", (Object)cost);
+                                Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId() + "." + id + ".balance", (Object) cost);
                                 Console.getInstance().saveDataConfig();
                             } else {
-                                Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId() + "." + id + ".type", (Object)tickettype.getName());
+                                Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId() + "." + id + ".type", (Object) tickettype.getName());
                                 Console.getInstance().saveDataConfig();
                             }
                         } else {
@@ -297,9 +299,10 @@ public class MetroCMD implements CommandExecutor {
                 Ticket ticket = null;
                 if (Console.getInstance().getDataConfig().getConfigurationSection("data") != null) {
                     for (Map.Entry entry : Console.getInstance().getDataConfig().getConfigurationSection("data").getValues(false).entrySet()) {
-                        if (Console.getInstance().getDataConfig().getConfigurationSection("data." + (String)entry.getKey() + "." + ticketid) == null) continue;
+                        if (Console.getInstance().getDataConfig().getConfigurationSection("data." + (String) entry.getKey() + "." + ticketid) == null)
+                            continue;
                         foundconfig = true;
-                        String type = Console.getInstance().getDataConfig().getString("data." + (String)entry.getKey() + "." + ticketid + ".type");
+                        String type = Console.getInstance().getDataConfig().getString("data." + (String) entry.getKey() + "." + ticketid + ".type");
                         for (Player pl : Console.getInstance().getServer().getOnlinePlayers()) {
                             if (!pl.getUniqueId().toString().equals(pl.getUniqueId().toString())) continue;
                             targetP = pl;
@@ -307,7 +310,7 @@ public class MetroCMD implements CommandExecutor {
                         for (Ticket tickettype : TicketManager.tickets) {
                             if (!tickettype.getName().equals(type)) continue;
                             ticket = tickettype;
-                            Cost = tickettype.isTopUp() ? Console.getInstance().getDataConfig().getDouble("data." + (String)entry.getKey() + "." + ticketid + ".balance") : tickettype.getStartupCost();
+                            Cost = tickettype.isTopUp() ? Console.getInstance().getDataConfig().getDouble("data." + (String) entry.getKey() + "." + ticketid + ".balance") : tickettype.getStartupCost();
                         }
                         if (!foundconfig) {
                             this.msg.sendConfigNotFoundc(sender);
@@ -331,12 +334,12 @@ public class MetroCMD implements CommandExecutor {
                                 if (is2 != null && is2.getType() != null && is2.getType() != Material.AIR) {
                                     if (targetP.getInventory().getSize() > 0) {
                                         if (is2.getItemMeta().getDisplayName() != null && is2.getItemMeta().getLore() != null && is2.getItemMeta().getDisplayName().equals(ticket.getDisplayName())) {
-                                            if (((String)is2.getItemMeta().getLore().get(0)).equals(ticketid)) {
+                                            if (((String) is2.getItemMeta().getLore().get(0)).equals(ticketid)) {
                                                 found = true;
-                                                EconomyResponse er = Console.economy.depositPlayer((OfflinePlayer)targetP, Cost);
+                                                EconomyResponse er = Console.economy.depositPlayer((OfflinePlayer) targetP, Cost);
                                                 if (er.transactionSuccess()) {
                                                     if (is2.getAmount() > 1) {
-                                                        Console.getInstance().getDataConfig().set("data." + (String)entry.getKey() + "." + ticketid, (Object)null);
+                                                        Console.getInstance().getDataConfig().set("data." + (String) entry.getKey() + "." + ticketid, (Object) null);
                                                         Console.getInstance().saveDataConfig();
                                                         Console.getInstance();
                                                         is2.setAmount(is2.getAmount() - 1);
@@ -373,7 +376,8 @@ public class MetroCMD implements CommandExecutor {
                 boolean foundPlayer = false;
                 if (Console.getInstance().getDataConfig().getConfigurationSection("data") != null) {
                     for (Map.Entry entry : Console.getInstance().getDataConfig().getConfigurationSection("data").getValues(false).entrySet()) {
-                        if (Console.getInstance().getDataConfig().getString("data." + (String)entry.getKey() + "." + ticketid) == null) continue;
+                        if (Console.getInstance().getDataConfig().getString("data." + (String) entry.getKey() + "." + ticketid) == null)
+                            continue;
                         foundConfig = true;
                         for (Player pl : Console.getInstance().getServer().getOnlinePlayers()) {
                             if (!pl.getUniqueId().toString().equals(entry.getKey())) continue;
@@ -393,7 +397,7 @@ public class MetroCMD implements CommandExecutor {
                     this.msg.sendConfigNotFoundc(sender);
                 }
                 double balance = Console.getInstance().getDataConfig().getDouble("data." + targetP.getUniqueId().toString() + "." + ticketid + ".balance");
-                String msg = TranslateMethods.translateColor((String)Console.getInstance().getConfig().getString("messages.ticketbalance"));
+                String msg = TranslateMethods.translateColor((String) Console.getInstance().getConfig().getString("messages.ticketbalance"));
                 msg = msg.replaceAll("<balance>", String.valueOf(balance));
                 targetP.sendMessage(msg);
             } else if (args[0].equalsIgnoreCase("opengui")) {
@@ -413,7 +417,8 @@ public class MetroCMD implements CommandExecutor {
                 boolean foundConfig = false;
                 if (Console.getInstance().getDataConfig().getConfigurationSection("data") != null) {
                     for (Map.Entry entry : Console.getInstance().getDataConfig().getConfigurationSection("data").getValues(false).entrySet()) {
-                        if (Console.getInstance().getDataConfig().getString("data." + (String)entry.getKey() + "." + ticketid) == null) continue;
+                        if (Console.getInstance().getDataConfig().getString("data." + (String) entry.getKey() + "." + ticketid) == null)
+                            continue;
                         foundConfig = true;
                         for (Player pl : Console.getInstance().getServer().getOnlinePlayers()) {
                             if (!pl.getUniqueId().toString().equals(entry.getKey())) continue;
@@ -430,13 +435,12 @@ public class MetroCMD implements CommandExecutor {
                     }
                     try {
                         value = Double.parseDouble(args[2]);
-                    }
-                    catch (NumberFormatException e) {
+                    } catch (NumberFormatException e) {
                         this.msg.sendInvalidNumberc(sender);
                     }
-                    EconomyResponse er = Console.economy.withdrawPlayer((OfflinePlayer)targetP, value);
+                    EconomyResponse er = Console.economy.withdrawPlayer((OfflinePlayer) targetP, value);
                     if (er.transactionSuccess()) {
-                        Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId().toString() + "." + ticketid + ".balance", (Object)(Console.getInstance().getDataConfig().getDouble("data." + targetP.getUniqueId().toString() + "." + ticketid + ".balance") + value));
+                        Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId().toString() + "." + ticketid + ".balance", (Object) (Console.getInstance().getDataConfig().getDouble("data." + targetP.getUniqueId().toString() + "." + ticketid + ".balance") + value));
                         this.msg.sendTransactionSucess(targetP);
                     } else {
                         this.msg.sendTransactionFail(targetP);
@@ -460,8 +464,7 @@ public class MetroCMD implements CommandExecutor {
                 }
                 try {
                     Amount = Integer.parseInt(args[3]);
-                }
-                catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     this.msg.sendInvalidNumberc(sender);
                     return false;
                 }
@@ -491,18 +494,18 @@ public class MetroCMD implements CommandExecutor {
                 }
                 ticketmeta.setLore(lore);
                 ticket.setItemMeta(ticketmeta);
-                double cost = startUpCost * (double)Amount;
+                double cost = startUpCost * (double) Amount;
                 EconomyResponse r = Console.economy.withdrawPlayer(targetP.getName(), cost);
                 if (r.transactionSuccess()) {
                     this.msg.sendTransactionSucess(targetP);
                     targetP.getInventory().addItem(new ItemStack[]{ticket});
                     if (tickettype.isTopUp()) {
-                        Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId() + "." + id + ".type", (Object)tickettype.getName());
+                        Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId() + "." + id + ".type", (Object) tickettype.getName());
                         Console.getInstance().saveDataConfig();
-                        Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId() + "." + id + ".balance", (Object)cost);
+                        Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId() + "." + id + ".balance", (Object) cost);
                         Console.getInstance().saveDataConfig();
                     } else {
-                        Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId() + "." + id + ".type", (Object)tickettype.getName());
+                        Console.getInstance().getDataConfig().set("data." + targetP.getUniqueId() + "." + id + ".type", (Object) tickettype.getName());
                         Console.getInstance().saveDataConfig();
                     }
                 } else {

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package me.jugondavidlisto.rodaliesplus.listeners;
 
 import java.util.ArrayList;
@@ -11,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+
 import me.jugondavidlisto.rodaliesplus.metro.Console;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,10 +43,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 
-/**
- *
- * @author Davidf
- */
 public class SignClickListener implements Listener {
 
     Console instance = Console.getInstance();
@@ -185,7 +177,7 @@ public class SignClickListener implements Listener {
                                                     this.msg.sendEnterGate(e.getPlayer());
 
                                                     // INICIO PUERTAS VIDIRECIONALES
-                                                    
+
                                                     org.bukkit.material.Sign sign3 = (org.bukkit.material.Sign) s.getData();
                                                     BlockFace directionFacing = sign3.getFacing();
 
@@ -211,9 +203,9 @@ public class SignClickListener implements Listener {
                                                     }
 
                                                     g.setFacingDirection(directionFacing);
-                                                    
+
                                                     // FIN PUERTAS VIDIRECIONALES
-                                                    
+
                                                     g.setOpen(true);
                                                     p.playSound(gateLocation, Sound.BLOCK_FENCE_GATE_OPEN, 1.0F, 1.0F);
                                                     state.update();
@@ -265,7 +257,7 @@ public class SignClickListener implements Listener {
                                             Console.listenTicket.remove((Object) e.getPlayer());
 
                                             // INICIO PUERTAS VIDIRECIONALES
-                                            
+
                                             org.bukkit.material.Sign sign3 = (org.bukkit.material.Sign) s.getData();
                                             BlockFace directionFacing = sign3.getFacing();
 
@@ -293,7 +285,7 @@ public class SignClickListener implements Listener {
                                             g.setFacingDirection(directionFacing);
 
                                             // FIN PUERTAS VIDIRECIONALES
-                                            
+
                                             g.setOpen(true);
                                             p.playSound(gateLocation, Sound.BLOCK_FENCE_GATE_OPEN, 1.0F, 1.0F);
                                             state.update();
