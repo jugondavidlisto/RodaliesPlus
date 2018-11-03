@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="RodaliesPlus:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/RodaliesPlus_jar</output-path>
-    <root id="archive" name="RodaliesPlus.jar">
-      <element id="module-output" name="RodaliesPlus" />
-    </root>
-  </artifact>
-</component>
