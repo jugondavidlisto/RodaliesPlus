@@ -1,0 +1,17 @@
+/bin/
+.classpath
+.settings
+target/
+Spigot/
+.project/
+src/test
+
+# intellij
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# other files
+*.log*
+.git/
